@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col">
+        <div class="card m-4">
+            <div class="card-header">
+                Detalle de venta
+            </div>
+            <div class="card-body text-secondary">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio U.</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="venta">
+                        <tr *ngFor="let detalle of venta.detalles">
+                            <td>{{ detalle.producto.nombre }}</td>
+                            <td>{{ detalle.producto.precio }}</td>
+                            <th>{{ detalle.cantidad }}</th>
+                            <th>{{ detalle.producto.precio * detalle.cantidad }}</th>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="!venta">
+                        <tr>
+                            <td colspan="4" style="text-align: center;">No hay registros</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="card m-4">
+            <div class="card-header">
+                Lista de ventas
+            </div>
+            <div class="card-body text-secondary">
+                <div class="row">
+                    <div class="mb-3 col-2">
+                        <input class="float-right form-control" type="date" (change)="getVentaByFecha($event)">
+                    </div>
+                    <div class="mb-3 col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Total</th>
+                                    <th width="5%" scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="ventas">
+                                <tr *ngFor="let venta of ventas">
+                                    <th scope="row">{{ venta.cliente.nombres + ' ' + venta.cliente.apellidos }}</th>
+                                    <td>{{ venta.fecha }}</td>
+                                    <td>
+                                        <div *ngFor="let detalle of venta.detalles">
+                                            {{ detalle.cantidad * detalle.producto.precio }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-secondary" (click)="getVenta(venta.id)">
+                                            <i class="fa fa-eye" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="!ventas">
+                                <tr>
+                                    <td colspan="4" style="text-align: center;">No hay registros</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
